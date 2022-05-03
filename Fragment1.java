@@ -24,11 +24,11 @@ import java.util.Date;
 
 public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedListener{
 
-    public static ArrayList lista;
-    public static String sijainti;
-    public static String paiva;
-    public static String aika;
-    public static String valittuVesi;
+    public static ArrayList list;
+    public static String location;
+    public static String date;
+    public static String time;
+    public static String chosenWaterbody;
 
     private Button search;
     private Button save;
@@ -36,7 +36,7 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
     private TextView wind_display;
     private EditText search_input;
     private Spinner spinner;
-    private ListView listaus;
+    private ListView water_result;
 
     private Context context;
 
@@ -52,16 +52,16 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
         search=(Button) rootView.findViewById(R.id.button);
         save=(Button) rootView.findViewById(R.id.button2);
         search_input=(EditText) rootView.findViewById(R.id.editTextTextPersonName);
-        listaus=(ListView) rootView.findViewById(R.id.ListView);
+        water_result=(ListView) rootView.findViewById(R.id.ListView);
 
         spinner=(Spinner) rootView.findViewById(R.id.spinner);
 
-        Masiina kone = Masiina.getInstance();
+        ResultCompiler kone = ResultCompiler.getInstance();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        ArrayAdapter<ArrayList<String>> adapter = new ArrayAdapter<ArrayList<String>>(getActivity(), android.R.layout.simple_spinner_dropdown_item, lista);
+        ArrayAdapter<ArrayList<String>> adapter = new ArrayAdapter<ArrayList<String>>(getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setOnItemSelectedListener(this);
@@ -69,22 +69,22 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sijainti = search_input.getText().toString();
-                location_display.setText(sijainti);
+                location = search_input.getText().toString();
+                location_display.setText(location);
 
-                SimpleDateFormat paivaf = new SimpleDateFormat("yyyy-MM-dd");
-                paiva = paivaf.format(new Date());
-                System.out.println(paiva);
+                SimpleDateFormat datef = new SimpleDateFormat("yyyy-MM-dd");
+                date = datef.format(new Date());
+                System.out.println(date);
 
-                SimpleDateFormat aikaf = new SimpleDateFormat("HH");
-                aikaf.getCalendar().add(Calendar.HOUR, 1);
-                aika = aikaf.format(new Date());
-                System.out.println(aika);
+                SimpleDateFormat timef = new SimpleDateFormat("HH");
+                timef.getCalendar().add(Calendar.HOUR, 1);
+                time = timef.format(new Date());
+                System.out.println(time);
 
                 try {
 
-                ArrayList tulos = Masiina.Haku();
-                lista = (ArrayList) tulos.get(1);
+                ArrayList tulos = ResultCompiler.Haku();
+                list = (ArrayList) tulos.get(1);
 
                 UpdateSpinner();
                 UpdateList();
@@ -100,7 +100,7 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WriteFile(sijainti, valittuVesi, paiva);
+                WriteFile(location, chosenWaterbody, date);
             }
         });
 
@@ -116,28 +116,28 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
         return fragmentFirst;
     }
 
-    //Tämä metodi päivittää listan järvien hakutuloksista
+    //This method updates the listview based on found bodies of water
 
     public void UpdateList(){
-        ArrayAdapter<ArrayList> adapter2 = new ArrayAdapter<ArrayList>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, lista);
-        listaus.setAdapter(adapter2);
+        ArrayAdapter<ArrayList> adapter2 = new ArrayAdapter<ArrayList>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, list);
+        water_result.setAdapter(adapter2);
     }
 
-    //Tämä metodi päivittää spinnerin järvien hakutuloksista
+    //This method updates the spinner based on found bodies of water
 
     public void UpdateSpinner(){
-        ArrayAdapter<ArrayList<String>> adapter = new ArrayAdapter<ArrayList<String>>(getActivity(), android.R.layout.simple_spinner_dropdown_item, lista);
+        ArrayAdapter<ArrayList<String>> adapter = new ArrayAdapter<ArrayList<String>>(getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
         spinner.setAdapter(adapter);
     }
 
-    //Tämä metodi tallentaa käyttäjän valitseman kohteen puhelimen muistiin
+    //This method writes the result to memory
 
-    public void WriteFile (String sijainti, String valittuVesi, String paiva){
+    public void WriteFile (String location, String chosenWaterbody, String date){
         try {
-            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("tallennettu.txt", Context.MODE_APPEND));
+            OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("savedresults.txt", Context.MODE_APPEND));
 
             String s ="";
-            s = "Date: "+paiva+" - "+sijainti+" - "+valittuVesi+"\n";
+            s = "Date: "+date+" - "+location+" - "+chosenWaterbody+"\n";
 
             osw.write(s);
             osw.close();
@@ -153,8 +153,8 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String text = adapterView.getItemAtPosition(i).toString();
         System.out.println(i);
-        valittuVesi = (String) lista.get(i);
-        System.out.println(valittuVesi);
+        chosenWaterbody = (String) list.get(i);
+        System.out.println(chosenWaterbody);
     }
 
     @Override
