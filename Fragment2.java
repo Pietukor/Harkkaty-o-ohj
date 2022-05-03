@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Fragment2 extends Fragment {
 
     private Button update;
-    public static ListView tallennetut;
+    public static ListView saved_view;
     public static ArrayList saved;
 
     private Context context;
@@ -31,7 +31,7 @@ public class Fragment2 extends Fragment {
 
         context = getActivity();
 
-        tallennetut=(ListView) rootView.findViewById(R.id.ListView2);
+        saved_view=(ListView) rootView.findViewById(R.id.ListView2);
         update = (Button) rootView.findViewById(R.id.button3);
 
         update.setOnClickListener(new View.OnClickListener() {
@@ -52,39 +52,39 @@ public class Fragment2 extends Fragment {
         return fragmentSecond;
     }
 
-    //Tämä metodi päivittää ListViewin adaperin ReadFilen palauttaman ArrayListin mukaiseksi.
+    //This method updates ListView based on results from ReadFile().
 
     public void UpdateHistory(){
 
         saved = ReadFile();
 
-        tallennetut.removeAllViewsInLayout();
+        saved_view.removeAllViewsInLayout();
         ArrayAdapter<ArrayList> adapter2 = new ArrayAdapter<ArrayList>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, saved);
-        tallennetut.setAdapter(adapter2);
+        saved_view.setAdapter(adapter2);
     }
 
-    //Tämä metodi lukee muistista käyttäjän tallentamat sijainnit ja palauttaa ne ArrayListinä.
+    //This method reads saved results from memory and returns them as an ArrayList.
 
     public ArrayList ReadFile(){
-        ArrayList tallennetut = new ArrayList();
+        ArrayList save_these = new ArrayList();
 
 
         try{
-            InputStream in = context.openFileInput("tallennettu.txt");
+            InputStream in = context.openFileInput("savedresults.txt");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String s ="";
 
             while ((s=br.readLine()) !=null){
                 System.out.println(s);
-                tallennetut.add(s);
+                save_these.add(s);
             }
 
         }catch(Exception i){
             i.printStackTrace();
         }
 
-        return tallennetut;
+        return save_these;
     }
     
 
