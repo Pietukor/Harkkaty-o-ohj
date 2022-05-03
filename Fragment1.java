@@ -116,15 +116,21 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
         return fragmentFirst;
     }
 
+    //Tämä metodi päivittää listan järvien hakutuloksista
+
     public void UpdateList(){
         ArrayAdapter<ArrayList> adapter2 = new ArrayAdapter<ArrayList>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, lista);
         listaus.setAdapter(adapter2);
     }
 
+    //Tämä metodi päivittää spinnerin järvien hakutuloksista
+
     public void UpdateSpinner(){
         ArrayAdapter<ArrayList<String>> adapter = new ArrayAdapter<ArrayList<String>>(getActivity(), android.R.layout.simple_spinner_dropdown_item, lista);
         spinner.setAdapter(adapter);
     }
+
+    //Tämä metodi tallentaa käyttäjän valitseman kohteen puhelimen muistiin
 
     public void WriteFile (String sijainti, String valittuVesi, String paiva){
         try {
