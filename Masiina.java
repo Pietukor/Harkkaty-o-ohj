@@ -3,6 +3,7 @@ package com.example.harkkaduuni;
 import java.util.ArrayList;
 
 public class Masiina {
+
     //Singleton:
 
     private static final Masiina M = new Masiina();
@@ -16,6 +17,9 @@ public class Masiina {
     private Masiina(){
 
     }
+
+    //Tämä metodi hakee siistityt tuuli- ja vesistötiedot kutsumalla TuuliParserVejhettä ja VesiParserVehjettä ja kokoaa tulokset yhdeksi ArrayListiksi joka palautetaan.
+    //Tämä metodi käsittelee myös väärästä syötteestä johtuvia virheitä
 
     public static ArrayList Haku(){
         ArrayList tulos = new ArrayList<>();
