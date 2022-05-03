@@ -83,13 +83,13 @@ public class Fragment1 extends Fragment implements AdapterView.OnItemSelectedLis
 
                 try {
 
-                ArrayList tulos = ResultCompiler.Haku();
-                list = (ArrayList) tulos.get(1);
+                ArrayList result = ResultCompiler.Search();
+                list = (ArrayList) result.get(1);
 
                 UpdateSpinner();
                 UpdateList();
 
-                    wind_display.setText((String) tulos.get(0) + " m/s");
+                    wind_display.setText((String) result.get(0) + " m/s");
                 } catch (IndexOutOfBoundsException e) {
                     wind_display.setText("location not found");
                 }
