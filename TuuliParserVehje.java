@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class TuuliParserVehje {
+
     //Singleton:
 
     private static final TuuliParserVehje P = new TuuliParserVehje();
@@ -26,7 +27,8 @@ public class TuuliParserVehje {
 
     }
 
-    //
+    // Tämä metodi Hakee käyttäjän syöttämän paikkakunnan ja senhetkisen kellonajan mukaan ilmatieteen avoimesta rajapinnasta säädataa.
+    // metodi käsittelee xml-muotoisen dokumentin ja palauttaa String-muotoisen tuulennopeuden.
 
     public static ArrayList parseWind(){
         ArrayList tuotos = new ArrayList<>();
