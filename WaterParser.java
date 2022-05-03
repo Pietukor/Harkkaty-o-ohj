@@ -31,7 +31,7 @@ public class WaterParser {
     // This method parses data returned by getJSON.
 
     public static ArrayList parseWater() {
-        ArrayList tuotos = new ArrayList<>();
+        ArrayList theresult = new ArrayList<>();
 
         String json = getJSON();
         System.out.println(json);
@@ -44,7 +44,7 @@ public class WaterParser {
                     JSONObject jobject = jsonarray.getJSONObject(i);
                     System.out.println("++++++++++" + (i + 1) + "+++++++++");
                     String jarvi = jobject.getString("Nimi");
-                    tuotos.add(jarvi);
+                    theresult.add(jarvi);
                     System.out.println(jarvi);
                 }
             } catch (JSONException e) {
@@ -52,7 +52,7 @@ public class WaterParser {
             }
         }
 
-        return tuotos;
+        return theresult;
     }
 
     // This method fetches water bodies based on location given by user and returns it in a JSON format string.
