@@ -29,7 +29,7 @@ public class WindParser {
     // This method parses the data and returns it as a string.
 
     public static ArrayList parseWind(){
-        ArrayList tuotos = new ArrayList<>();
+        ArrayList theresult = new ArrayList<>();
         String location = Fragment1.location;
         String date = Fragment1.date;
         String time = Fragment1.time;
@@ -45,7 +45,7 @@ public class WindParser {
             root.normalize();
             String windSpeed = root.getElementsByTagName("BsWfs:ParameterValue").item(0).getTextContent();
             System.out.println(windSpeed);
-            tuotos.add(windSpeed);
+            theresult.add(windSpeed);
         }
         catch (ParserConfigurationException e) {
             System.err.println("Couldn't initialize parser.");
@@ -57,7 +57,7 @@ public class WindParser {
         }
 
 
-        return tuotos;
+        return theresult;
     }
 
 }
