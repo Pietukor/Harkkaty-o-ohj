@@ -14,21 +14,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class VesiParserVehje {
+public class WaterParser {
 
     //Singleton:
 
-    private static final VesiParserVehje P = new VesiParserVehje();
+    private static final WaterParser P = new WaterParser();
 
-    public static VesiParserVehje getInstance() {
+    public static WaterParser getInstance() {
         return P;
     }
 
-    private VesiParserVehje() {
+    private WaterParser() {
 
     }
 
-    // Tämä metodi käsittelee getJSON-metodista saadun järvidatan ArrayListiksi ja palauttaa listan.
+    // This method parses data returned by getJSON.
 
     public static ArrayList parseWater() {
         ArrayList tuotos = new ArrayList<>();
@@ -55,13 +55,13 @@ public class VesiParserVehje {
         return tuotos;
     }
 
-    // Tämä metodi hakee käyttäjään syöttämän paikkakunnan perusteella ympäristö.fi järvirajapinnasta tiedot suurimmista vesialueista json-muodossa ja palauttaa tiedot String-muuttujana.
+    // This method fetches water bodies based on location given by user and returns it in a JSON format string.
 
     public static String getJSON() {
-        String sijainti = Fragment1.sijainti;
+        String location = Fragment1.location;
         String response = null;
         try {
-            URL vesiurl = new URL("http://rajapinnat.ymparisto.fi/api/jarvirajapinta/1.0/odata/Jarvi?$top=10&$filter=KuntaNimi%20eq%20%27"+sijainti+"%27");
+            URL vesiurl = new URL("http://rajapinnat.ymparisto.fi/api/jarvirajapinta/1.0/odata/Jarvi?$top=10&$filter=KuntaNimi%20eq%20%27"+location+"%27");
             HttpURLConnection conn = (HttpURLConnection) vesiurl.openConnection();
             conn.setRequestMethod("GET");
             InputStream in = new BufferedInputStream(conn.getInputStream());
