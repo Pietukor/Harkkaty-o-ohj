@@ -52,8 +52,10 @@ public class Fragment2 extends Fragment {
         return fragmentSecond;
     }
 
+    //Tämä metodi päivittää ListViewin adaperin ReadFilen palauttaman ArrayListin mukaiseksi.
+
     public void UpdateHistory(){
-        //saved = ReadWrite.ReadFile();
+
         saved = ReadFile();
 
         tallennetut.removeAllViewsInLayout();
@@ -61,10 +63,7 @@ public class Fragment2 extends Fragment {
         tallennetut.setAdapter(adapter2);
     }
 
-    public static void AddHistory (String tallenna){
-        saved.add(tallenna);
-        System.out.println(saved.get(0));
-    }
+    //Tämä metodi lukee muistista käyttäjän tallentamat sijainnit ja palauttaa ne ArrayListinä.
 
     public ArrayList ReadFile(){
         ArrayList tallennetut = new ArrayList();
